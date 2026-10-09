@@ -216,3 +216,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Production configuration
+/ice-cream-dataops/config.prod.yaml
