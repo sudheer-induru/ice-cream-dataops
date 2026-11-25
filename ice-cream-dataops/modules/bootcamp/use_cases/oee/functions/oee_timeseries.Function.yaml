@@ -1,5 +1,6 @@
   name: OEE TimeSeries
   externalId: oee_timeseries
+  dataSetExternalId: {{ uc_oee_ds_external_id }}
   owner: CDF Bootcamp Team
   description: Function to calculate OEE
   metadata:
