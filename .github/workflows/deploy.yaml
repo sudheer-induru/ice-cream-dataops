@@ -13,7 +13,7 @@ on:
         required: false
         type: choice
         options:
-          - test
+          - dev
           - prod
 
 permissions:
@@ -28,14 +28,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - environment: ${{ inputs.environment != '' && inputs.environment || 'test' }}
+          - environment: ${{ inputs.environment != '' && inputs.environment || 'dev' }}
 
     environment: ${{ matrix.environment }}
     env:
-      CDF_PROJECT: cdf-bootcamp-72-${{ matrix.environment }}
-      CDF_CLUSTER: westeurope-1
-      IDP_TENANT_ID: 16e3985b-ebe8-4e24-9da4-933e21a9fc81
-      IDP_TOKEN_URL: https://login.microsoftonline.com/16e3985b-ebe8-4e24-9da4-933e21a9fc81/oauth2/v2.0/token
+      CDF_PROJECT: ${{ matrix.environment == 'prod' && 'cdf-bootcamp-72-prod' || 'sudheeriv-dev' }}
+      CDF_CLUSTER: ${{ matrix.environment == 'prod' && 'westeurope-1' || 'bluefield' }}
+      IDP_TENANT_ID: ${{ matrix.environment == 'prod' && '16e3985b-ebe8-4e24-9da4-933e21a9fc81' || vars.IDP_TENANT_ID }}
+      IDP_TOKEN_URL: ${{ matrix.environment == 'prod' && 'https://login.microsoftonline.com/16e3985b-ebe8-4e24-9da4-933e21a9fc81/oauth2/v2.0/token' || vars.IDP_TOKEN_URL }}
+      IDP_SCOPES: ${{ vars.IDP_SCOPES }}
       LOGIN_FLOW: client_credentials
 
       IDP_CLIENT_ID: ${{ vars.IDP_CLIENT_ID }}
@@ -58,4 +59,4 @@ jobs:
       - name: Build Toolkit Configurations
         run: cdf build --env=${{ matrix.environment }}
       - name: Deploy Toolkit Configurations
-        run: cdf deploy --env=${{ matrix.environment }}
+        run: cdf deploy --cdf-project="$CDF_PROJECT"
