@@ -24,7 +24,7 @@ jobs:
     name: Build & Deploy
     runs-on: ubuntu-latest
     container:
-      image: cognite/toolkit:0.6.53
+      image: cognite/toolkit:0.9.75
     strategy:
       matrix:
         include:
