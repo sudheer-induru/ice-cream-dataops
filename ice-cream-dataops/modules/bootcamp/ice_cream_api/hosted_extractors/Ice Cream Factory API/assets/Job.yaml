@@ -1,13 +1,11 @@
 externalId: ICAPI Assets
-mapping:
-   expression: 'input.map(row => {
-      "type": "raw_row",
-      "table": "assets",
-      "database": "ice-cream-factory-db",
-      "key": row.external_id,
-      "columns": row
-      })'
-input:
-   type: csv
-   delimiter: ','
-published: true
+sourceId: Ice Cream Factory API
+destinationId: ICAPI Assets
+format:
+  type: custom
+  encoding: utf8
+  mappingId: ICAPI Assets
+config:
+  interval: 1d
+  path: /site/all/csv
+  method: get
